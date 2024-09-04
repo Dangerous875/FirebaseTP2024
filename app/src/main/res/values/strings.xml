@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SpotiDogs</string>
+    <string name="HomeTittle">Millions of dogs.</string>
+    <string name="FreeString">Free on SpotiDogs.</string>
+    <string name="SignUpFree">Sign up free</string>
+    <string name="Google">Continue with Google</string>
+    <string name="Facebook">Continue with Facebook</string>
+</resources>
