@@ -1,5 +1,7 @@
 package com.tp.spotidogs.ui.screens.loginScreen
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +42,7 @@ import com.tp.spotidogs.ui.theme.Green
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
+    val activity = LocalContext.current as Activity
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,7 +93,7 @@ fun LoginScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.size(8.dp))
 
-        ButtonLogin(R.drawable.ic_facebook, R.string.Facebook) {/*TODO*/ }
+        ButtonLogin(R.drawable.ic_facebook, R.string.Facebook) {throw RuntimeException("Explotar") }
 
         Spacer(modifier = Modifier.size(24.dp))
 
@@ -103,6 +107,10 @@ fun LoginScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.weight(1f))
 
+    }
+
+    BackHandler {
+        activity.finish()
     }
 
 }

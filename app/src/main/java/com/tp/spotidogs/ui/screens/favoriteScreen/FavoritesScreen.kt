@@ -3,6 +3,7 @@ package com.tp.spotidogs.ui.screens.favoriteScreen
 import android.content.Context
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -51,6 +52,8 @@ import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.domain.model.Dog
 import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.screens.favoriteScreen.viewmodel.FavoriteScreenViewModel
+import com.tp.spotidogs.ui.theme.Black
+import com.tp.spotidogs.ui.theme.Green
 
 @Composable
 fun FavoritesScreen(
@@ -74,7 +77,10 @@ fun FavoritesScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 46.dp)
-                    .background(color = Color(0xFF42A8F8), shape = RoundedCornerShape(0.dp)),
+                    .background(
+                        color = Green,
+                        shape = RoundedCornerShape(0.dp)
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "EmptyList", fontWeight = FontWeight.Bold, fontSize = 34.sp)
@@ -84,7 +90,7 @@ fun FavoritesScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 42.dp)
-                    .background(color = Color(0xFF42A8F8), shape = RoundedCornerShape(0.dp))
+                    .background(color = Green, shape = RoundedCornerShape(0.dp))
             ) {
                 items(dogList) { dog ->
                     CardDog(dog, viewModel)
@@ -212,7 +218,7 @@ fun CardDog(dog: Dog, viewModel: FavoriteScreenViewModel) {
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
             contentColor = Color.Black
-        )
+        ), border = BorderStroke(4.dp, Black)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Image(

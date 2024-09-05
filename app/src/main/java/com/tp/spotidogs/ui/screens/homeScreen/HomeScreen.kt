@@ -1,7 +1,5 @@
 package com.tp.spotidogs.ui.screens.homeScreen
 
-import android.app.Activity
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,11 +47,12 @@ import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
 import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.ui.components.SetOrientationScreen
 import com.tp.spotidogs.ui.screens.homeScreen.viewmodel.HomeScreenViewModel
+import com.tp.spotidogs.ui.theme.Black
+import com.tp.spotidogs.ui.theme.Green
 
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeScreenViewModel = hiltViewModel()) {
 
-    val activity = LocalContext.current as Activity
     val isLoading by viewModel.isLoading.collectAsState()
     val allBreeds by viewModel.allBreeds.collectAsState()
     val context = LocalContext.current
@@ -66,9 +65,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeScreenViewModel 
         ShowContent(allBreeds, viewModel, navController)
     }
 
-    BackHandler {
-        activity.finish()
-    }
+
 }
 
 @Composable
@@ -82,7 +79,7 @@ fun ShowContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 46.dp)
-            .background(Color(0xFF42A8F8)), contentAlignment = Alignment.Center
+            .background(Green), contentAlignment = Alignment.Center
     ) {
         Card(
             modifier = Modifier
@@ -103,7 +100,7 @@ fun ShowContent(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF42A8F8)), contentPadding = PaddingValues(4.dp)
+                    .background(Green), contentPadding = PaddingValues(4.dp)
             ) {
                 items(allBreeds) {
                     Card(
@@ -118,7 +115,7 @@ fun ShowContent(
                         elevation = CardDefaults.cardElevation(16.dp),
                         colors = CardColors(
                             contentColor = Color.Black,
-                            containerColor = Color(0xFF81C6FC),
+                            containerColor = Green,
                             disabledContentColor = Color.White,
                             disabledContainerColor = Color.White
                         ), border = BorderStroke(2.dp, Color.Black)
@@ -190,7 +187,7 @@ fun TopBarHome(navController: NavHostController) {
 
 @Composable
 fun ShowLoading() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(color = Color.Black)
+    Box(modifier = Modifier.fillMaxSize().background(Black), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(color = Green)
     }
 }

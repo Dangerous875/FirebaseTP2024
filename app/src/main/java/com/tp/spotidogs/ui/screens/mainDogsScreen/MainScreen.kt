@@ -3,6 +3,7 @@ package com.tp.spotidogs.ui.screens.mainDogsScreen
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -58,6 +59,8 @@ import com.tp.spotidogs.ui.components.SetOrientationScreen
 import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.components.TopActionBar
 import com.tp.spotidogs.ui.screens.mainDogsScreen.viewmodel.MainScreenViewModel
+import com.tp.spotidogs.ui.theme.Black
+import com.tp.spotidogs.ui.theme.Green
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -85,7 +88,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF42A8F8))
+                .background(Green)
                 .constrainAs(idContentView) {
                     top.linkTo(idTopBar.bottom)
                     start.linkTo(parent.start)
@@ -143,7 +146,7 @@ fun DogCard(dog: Dog, navController: NavHostController, viewModel: MainScreenVie
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
             contentColor = Color.Black
-        )
+        ), border = BorderStroke(4.dp, Black)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Image(

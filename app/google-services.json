@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369232255328",
+    "project_id": "fir-tp2024",
+    "storage_bucket": "fir-tp2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369232255328:android:1c91d48e07b0375b0aa605",
+        "android_client_info": {
+          "package_name": "com.tp.spotidogs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9XlHt3efSID7dN3D13iGPXLMgjKzY-74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.tp.spotidogs.data.navigation.HomeScreenRoute
 import com.tp.spotidogs.ui.theme.Black
 import com.tp.spotidogs.ui.theme.SelectedField
 import com.tp.spotidogs.ui.theme.UnselectedField
@@ -82,7 +83,7 @@ fun AuthenticationScreen(navController: NavController) {
             )
         )
         Spacer(Modifier.height(48.dp))
-        Button(onClick = {
+        Button(onClick = { navController.navigate(HomeScreenRoute)
 //            if (email.isNotBlank() && password.isNotBlank()){
 //                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
 //                    if (task.isSuccessful) {
