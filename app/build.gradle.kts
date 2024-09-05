@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
@@ -43,9 +44,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
