@@ -15,11 +15,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +32,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,9 +46,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import com.tp.spotidogs.R
 import com.tp.spotidogs.data.local.OrientationScreen
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
+import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.ui.components.SetOrientationScreen
 import com.tp.spotidogs.ui.screens.homeScreen.viewmodel.HomeScreenViewModel
@@ -51,7 +58,7 @@ import com.tp.spotidogs.ui.theme.Black
 import com.tp.spotidogs.ui.theme.Green
 
 @Composable
-fun HomeScreen(navController: NavHostController, viewModel: HomeScreenViewModel = hiltViewModel()) {
+fun HomeScreen(navController: NavHostController, auth: FirebaseAuth, viewModel: HomeScreenViewModel = hiltViewModel()) {
 
     val isLoading by viewModel.isLoading.collectAsState()
     val allBreeds by viewModel.allBreeds.collectAsState()
@@ -62,7 +69,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeScreenViewModel 
     if (isLoading) {
         ShowLoading()
     } else {
-        ShowContent(allBreeds, viewModel, navController)
+        ShowContent(allBreeds, viewModel, navController,auth)
     }
 
 
@@ -72,9 +79,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeScreenViewModel 
 fun ShowContent(
     allBreeds: List<String>,
     viewModel: HomeScreenViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    auth: FirebaseAuth
 ) {
-    TopBarHome(navController)
+    TopBarHome(navController,auth)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -158,7 +166,8 @@ fun ShowContent(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarHome(navController: NavHostController) {
+fun TopBarHome(navController: NavHostController, auth: FirebaseAuth) {
+    val (expanded, setExpanded) = remember { mutableStateOf(false) }
     TopAppBar(
         modifier = Modifier.height(48.dp),
         title = {
@@ -181,6 +190,51 @@ fun TopBarHome(navController: NavHostController) {
                     tint = Color.White
                 )
             }
+            IconButton(onClick = { setExpanded(true) }) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { setExpanded(false) }
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {}
+                        .fillMaxWidth()
+                ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {auth.signOut()
+                            navController.navigate(LoginScreenRoute) {
+                                popUpTo(MainScreenRoute) { inclusive = true }
+                            }}
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "Log Out",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+
+            }
+        }
         }
     )
 }

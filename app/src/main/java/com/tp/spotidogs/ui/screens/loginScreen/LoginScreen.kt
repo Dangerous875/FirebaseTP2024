@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,16 +34,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import com.tp.spotidogs.R
 import com.tp.spotidogs.data.navigation.AuthenticationScreenRoute
+import com.tp.spotidogs.data.navigation.HomeScreenRoute
+import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.data.navigation.RegisterScreenRoute
 import com.tp.spotidogs.ui.theme.Black
 import com.tp.spotidogs.ui.theme.Gray
 import com.tp.spotidogs.ui.theme.Green
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, auth: FirebaseAuth) {
     val activity = LocalContext.current as Activity
+
+    LaunchedEffect(auth) {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            navController.navigate(HomeScreenRoute) {
+                popUpTo(LoginScreenRoute) { inclusive = true }
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -1,5 +1,6 @@
 package com.tp.spotidogs.ui.screens.registerScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -30,12 +31,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
+import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.ui.theme.Black
 import com.tp.spotidogs.ui.theme.SelectedField
 import com.tp.spotidogs.ui.theme.UnselectedField
 
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -56,7 +59,7 @@ fun RegisterScreen(navController: NavController) {
                 modifier = Modifier
                     .padding(vertical = 24.dp)
                     .size(24.dp)
-                    .clickable { }
+                    .clickable { navController.navigate(LoginScreenRoute) }
             )
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -83,18 +86,18 @@ fun RegisterScreen(navController: NavController) {
         )
         Spacer(Modifier.height(48.dp))
         Button(onClick = {
-//            if (email.isNotBlank() && password.isNotBlank()){
-//                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show()
-//                        navigateToHome()
-//                    }else{
-//                        Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }else{
-//                Toast.makeText(context, "Please complete all fields", Toast.LENGTH_SHORT).show()
-//            }
+            if (email.isNotBlank() && password.isNotBlank()){
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show()
+                        navController.navigate(LoginScreenRoute)
+                    }else{
+                        Toast.makeText(context, "Not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }else{
+                Toast.makeText(context, "Please complete all fields", Toast.LENGTH_SHORT).show()
+            }
 
         }) {
             Text(text = "Sign Up")

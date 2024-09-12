@@ -1,5 +1,6 @@
 package com.tp.spotidogs.ui.screens.authenticationScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,13 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
+import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.ui.theme.Black
 import com.tp.spotidogs.ui.theme.SelectedField
 import com.tp.spotidogs.ui.theme.UnselectedField
 
 @Composable
-fun AuthenticationScreen(navController: NavController) {
+fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -57,7 +61,7 @@ fun AuthenticationScreen(navController: NavController) {
                 modifier = Modifier
                     .padding(vertical = 24.dp)
                     .size(24.dp)
-                    .clickable {  }
+                    .clickable { navController.navigate(LoginScreenRoute) }
             )
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -83,18 +87,18 @@ fun AuthenticationScreen(navController: NavController) {
             )
         )
         Spacer(Modifier.height(48.dp))
-        Button(onClick = { navController.navigate(HomeScreenRoute)
-//            if (email.isNotBlank() && password.isNotBlank()){
-//                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        navigateToSuccess()
-//                    } else {
-//                        Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }else{
-//                Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
-//            }
+        Button(onClick = {
+            if (email.isNotBlank() && password.isNotBlank()){
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        navController.navigate(HomeScreenRoute)
+                    } else {
+                        Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }else{
+                Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
+            }
 
         }) {
             Text(text = "Login")
