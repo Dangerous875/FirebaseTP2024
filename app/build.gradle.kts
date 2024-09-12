@@ -99,8 +99,9 @@ dependencies {
 //Serialization and Navigation 2.8.0
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
-    //Firebase
+    //Firebase Implementation
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
-
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
 }
