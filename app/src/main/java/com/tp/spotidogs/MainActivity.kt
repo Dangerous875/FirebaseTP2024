@@ -3,14 +3,11 @@ package com.tp.spotidogs
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.tp.spotidogs.data.navigation.AuthenticationScreenRoute
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
