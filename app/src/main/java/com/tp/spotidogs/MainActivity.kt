@@ -26,18 +26,18 @@ import com.tp.spotidogs.ui.screens.mainDogsScreen.MainScreen
 import com.tp.spotidogs.ui.screens.registerScreen.RegisterScreen
 import com.tp.spotidogs.ui.screens.zoomScreen.ZoomScreen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var navController : NavHostController
-    private lateinit var auth : FirebaseAuth
+    @Inject
+    lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
         setContent {
-            navController = rememberNavController()
+            val navController = rememberNavController()
             NavHost(navController = navController, startDestination = LoginScreenRoute) {
                 composable<AuthenticationScreenRoute> { AuthenticationScreen(navController = navController,auth) }
                 composable<RegisterScreenRoute> { RegisterScreen(navController = navController,auth) }
