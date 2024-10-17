@@ -41,8 +41,8 @@ import com.tp.spotidogs.ui.theme.UnselectedField
 
 @Composable
 fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("pepe@gmail.com") }
+    var password by remember { mutableStateOf("123456") }
     val context = LocalContext.current
 
     Column(

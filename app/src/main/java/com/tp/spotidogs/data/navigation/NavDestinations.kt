@@ -22,3 +22,6 @@ object AuthenticationScreenRoute
 
 @Serializable
 object RegisterScreenRoute
+
+@Serializable
+object TestFireStoreRoute

@@ -8,15 +8,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tp.spotidogs.data.navigation.AuthenticationScreenRoute
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
 import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.data.navigation.RegisterScreenRoute
+import com.tp.spotidogs.data.navigation.TestFireStoreRoute
 import com.tp.spotidogs.data.navigation.ZoomScreenRoute
 import com.tp.spotidogs.ui.screens.authenticationScreen.AuthenticationScreen
 import com.tp.spotidogs.ui.screens.favoriteScreen.FavoritesScreen
+import com.tp.spotidogs.ui.screens.firestore.firestoreScreen.FireStoreScreen
 import com.tp.spotidogs.ui.screens.homeScreen.HomeScreen
 import com.tp.spotidogs.ui.screens.loginScreen.LoginScreen
 import com.tp.spotidogs.ui.screens.mainDogsScreen.MainScreen
@@ -46,6 +51,7 @@ class MainActivity : ComponentActivity() {
                     ZoomScreen(safeArgs.urlImage)
                 }
                 composable<FavoriteScreenRoute> { FavoritesScreen(navController) }
+                composable<TestFireStoreRoute> { FireStoreScreen(navController) }
             }
             }
         }

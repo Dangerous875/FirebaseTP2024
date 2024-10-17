@@ -104,4 +104,5 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
 }
