@@ -33,7 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
-import com.tp.spotidogs.data.navigation.TestFireStoreRoute
+import com.tp.spotidogs.data.navigation.FireStoreRoute
+import com.tp.spotidogs.data.navigation.RealTimeDBRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,7 +111,7 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .clickable {navController.navigate(TestFireStoreRoute)}
+                        .clickable {navController.navigate(FireStoreRoute)}
                         .fillMaxWidth()
                 ) {
 
@@ -122,6 +123,32 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
 
                     Text(
                         text = "Firestore",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {navController.navigate(RealTimeDBRoute)}
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "RealTimeDB",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(end = 16.dp)
