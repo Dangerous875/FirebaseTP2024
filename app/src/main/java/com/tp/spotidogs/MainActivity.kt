@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = LoginScreenRoute) {
+            NavHost(navController = navController, startDestination = RealTimeDBRoute) {
                 composable<AuthenticationScreenRoute> { AuthenticationScreen(navController = navController,auth) }
                 composable<RegisterScreenRoute> { RegisterScreen(navController = navController,auth) }
                 composable<LoginScreenRoute> { LoginScreen(navController = navController,auth) }
