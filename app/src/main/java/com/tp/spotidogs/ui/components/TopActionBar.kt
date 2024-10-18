@@ -12,6 +12,7 @@ import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,6 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
+import com.tp.spotidogs.data.navigation.FireStoreRoute
+import com.tp.spotidogs.data.navigation.RealTimeDBRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,6 +97,58 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
 
                     Text(
                         text = "Favorites Pictures",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {navController.navigate(FireStoreRoute)}
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "Firestore",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {navController.navigate(RealTimeDBRoute)}
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "RealTimeDB",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(end = 16.dp)

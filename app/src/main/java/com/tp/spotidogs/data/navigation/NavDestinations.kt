@@ -22,3 +22,9 @@ object AuthenticationScreenRoute
 
 @Serializable
 object RegisterScreenRoute
+
+@Serializable
+object FireStoreRoute
+
+@Serializable
+object RealTimeDBRoute
