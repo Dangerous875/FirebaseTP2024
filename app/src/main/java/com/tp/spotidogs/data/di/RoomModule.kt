@@ -2,7 +2,7 @@ package com.tp.spotidogs.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.tp.spotidogs.data.database.DogsDataBase
+import com.tp.spotidogs.data.database.room.DogsDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

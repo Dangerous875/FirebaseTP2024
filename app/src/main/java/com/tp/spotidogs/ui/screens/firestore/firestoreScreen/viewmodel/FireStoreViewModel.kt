@@ -29,7 +29,6 @@ class FireStoreViewModel @Inject constructor(private val firestore: FirebaseFire
         firestore.collection(firestore_collection)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Log.e("KlyxFirestore", "Error al escuchar cambios", error)
                     return@addSnapshotListener
                 }
                 if (snapshot != null) {

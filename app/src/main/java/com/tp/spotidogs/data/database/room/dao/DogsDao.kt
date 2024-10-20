@@ -1,10 +1,10 @@
-package com.tp.spotidogs.data.database.dao
+package com.tp.spotidogs.data.database.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.tp.spotidogs.data.database.entities.DogEntity
+import com.tp.spotidogs.data.database.room.entities.DogEntity
 
 @Dao
 interface DogsDao {

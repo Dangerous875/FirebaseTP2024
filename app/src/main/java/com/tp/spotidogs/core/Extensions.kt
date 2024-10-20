@@ -1,6 +1,6 @@
 package com.tp.spotidogs.core
 
-import com.tp.spotidogs.data.database.entities.DogEntity
+import com.tp.spotidogs.data.database.room.entities.DogEntity
 import com.tp.spotidogs.domain.model.Dog
 
 
