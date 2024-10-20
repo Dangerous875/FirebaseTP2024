@@ -26,5 +26,3 @@ object RegisterScreenRoute
 @Serializable
 object FireStoreRoute
 
-@Serializable
-object RealTimeDBRoute

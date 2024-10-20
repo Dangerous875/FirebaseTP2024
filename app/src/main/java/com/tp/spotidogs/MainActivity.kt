@@ -10,17 +10,15 @@ import androidx.navigation.toRoute
 import com.google.firebase.auth.FirebaseAuth
 import com.tp.spotidogs.data.navigation.AuthenticationScreenRoute
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
+import com.tp.spotidogs.data.navigation.FireStoreRoute
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
 import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.data.navigation.RegisterScreenRoute
-import com.tp.spotidogs.data.navigation.FireStoreRoute
-import com.tp.spotidogs.data.navigation.RealTimeDBRoute
 import com.tp.spotidogs.data.navigation.ZoomScreenRoute
 import com.tp.spotidogs.ui.screens.authenticationScreen.AuthenticationScreen
 import com.tp.spotidogs.ui.screens.favoriteScreen.FavoritesScreen
-import com.tp.spotidogs.ui.screens.firestore.firestoreScreen.FireStoreScreen
-import com.tp.spotidogs.ui.screens.firestore.realtimeDBScreen.RealTimeDBScreen
+import com.tp.spotidogs.ui.screens.firestore.FireStoreScreen
 import com.tp.spotidogs.ui.screens.homeScreen.HomeScreen
 import com.tp.spotidogs.ui.screens.loginScreen.LoginScreen
 import com.tp.spotidogs.ui.screens.mainDogsScreen.MainScreen
@@ -51,7 +49,6 @@ class MainActivity : ComponentActivity() {
                 }
                 composable<FavoriteScreenRoute> { FavoritesScreen(navController) }
                 composable<FireStoreRoute> { FireStoreScreen(navController) }
-                composable<RealTimeDBRoute> { RealTimeDBScreen(navController) }
             }
             }
         }
