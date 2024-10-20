@@ -36,6 +36,9 @@ class RealTimeDBViewModel @Inject constructor(private val database: FirebaseData
 
     init {
         getCombatArena()
+        if (_superHero1.value != null && _superHero2.value != null) {
+            _isLoading.value = false
+        }
     }
 
     private fun getCombatArena() {
@@ -44,14 +47,9 @@ class RealTimeDBViewModel @Inject constructor(private val database: FirebaseData
                 val combatArena = snapshot.getValue(CombatArena::class.java)
                 _superHero1.value = combatArena!!.superHero1!!  // Assign new instance
                 _superHero2.value = combatArena.superHero2!!  // Assign new instance
-                if (_superHero1.value != null) {
-                    Log.i(
-                        "KlyxFirestore",
-                        "charge arena ${_superHero1.value!!.life} && ${_superHero2.value!!.life}"
-                    )
+                if (_superHero1.value != null && _superHero2.value != null) {
                     _isLoading.value = false
                 }
-
             }
         }
 
