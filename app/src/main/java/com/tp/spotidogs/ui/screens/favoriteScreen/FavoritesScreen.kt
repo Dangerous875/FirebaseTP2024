@@ -6,6 +6,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,7 +49,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.tp.spotidogs.data.local.OrientationScreen
+import com.tp.spotidogs.data.navigation.ZoomScreenRoute
 import com.tp.spotidogs.domain.model.Dog
+import com.tp.spotidogs.ui.components.SetOrientationScreen
 import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.screens.favoriteScreen.viewmodel.FavoriteScreenViewModel
 import com.tp.spotidogs.ui.theme.Black
@@ -66,6 +70,7 @@ fun FavoritesScreen(
         mutableStateOf(false)
     }
     val context = LocalContext.current
+    SetOrientationScreen(context = context, orientation = OrientationScreen.PORTRAIT.orientation)
 
     if (isLoading) {
         ShowLoading()
@@ -92,7 +97,7 @@ fun FavoritesScreen(
                     .background(color = Green, shape = RoundedCornerShape(0.dp))
             ) {
                 items(dogList) { dog ->
-                    CardDog(dog, viewModel)
+                    CardDog(dog, viewModel,navHostController)
                 }
             }
         }
@@ -202,12 +207,14 @@ fun ShowDialog(viewModel: FavoriteScreenViewModel, context: Context, onDismiss: 
 }
 
 @Composable
-fun CardDog(dog: Dog, viewModel: FavoriteScreenViewModel) {
+fun CardDog(dog: Dog, viewModel: FavoriteScreenViewModel, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 4.dp)
-            .height(250.dp),
+            .height(250.dp).clickable {
+                navController.navigate(ZoomScreenRoute(dog.imageUrl))
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(

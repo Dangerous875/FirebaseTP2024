@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 composable<HomeScreenRoute> { HomeScreen(navController,auth) }
                 composable<ZoomScreenRoute> {
                     val safeArgs = it.toRoute<ZoomScreenRoute>()
-                    ZoomScreen(safeArgs.urlImage)
+                    ZoomScreen(safeArgs.urlImage,navController)
                 }
                 composable<FavoriteScreenRoute> { FavoritesScreen(navController) }
                 composable<FireStoreRoute> { FireStoreScreen(navController) }

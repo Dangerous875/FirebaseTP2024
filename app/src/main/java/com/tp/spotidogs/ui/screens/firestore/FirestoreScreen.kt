@@ -6,6 +6,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,6 +51,9 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.tp.spotidogs.data.database.firestore.model.DogStore
 import com.tp.spotidogs.data.database.firestore.model.toDomain
+import com.tp.spotidogs.data.local.OrientationScreen
+import com.tp.spotidogs.data.navigation.ZoomScreenRoute
+import com.tp.spotidogs.ui.components.SetOrientationScreen
 import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.screens.firestore.viewmodel.FireStoreViewModel
 import com.tp.spotidogs.ui.theme.Black
@@ -67,6 +71,7 @@ fun FireStoreScreen(
         mutableStateOf(false)
     }
     val context = LocalContext.current
+    SetOrientationScreen(context = context, orientation = OrientationScreen.PORTRAIT.orientation)
 
     if (isLoading) {
         ShowLoading()
@@ -93,7 +98,7 @@ fun FireStoreScreen(
                     .background(color = Green, shape = RoundedCornerShape(0.dp))
             ) {
                 items(dogList) { dog ->
-                    CardDog(dog, viewModel)
+                    CardDog(dog, viewModel,navHostController)
                 }
             }
         }
@@ -207,12 +212,14 @@ fun ShowDialog(viewModel: FireStoreViewModel, context: Context, onDismiss: (Bool
 }
 
 @Composable
-fun CardDog(dog: DogStore, viewModel: FireStoreViewModel) {
+fun CardDog(dog: DogStore, viewModel: FireStoreViewModel, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 4.dp)
-            .height(250.dp),
+            .height(250.dp).clickable {
+                navController.navigate(ZoomScreenRoute(dog.imageUrl!!))
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(

@@ -69,6 +69,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel 
     SetOrientationScreen(context = context, orientation = OrientationScreen.PORTRAIT.orientation)
     var showDialog by rememberSaveable { mutableStateOf(false) }
     val allBreeds by viewModel.allBreeds.collectAsState()
+    SetOrientationScreen(context = context, orientation = OrientationScreen.PORTRAIT.orientation)
 
     ConstraintLayout(
         modifier = Modifier

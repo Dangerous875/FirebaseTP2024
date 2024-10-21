@@ -50,7 +50,7 @@ class MainScreenViewModel @Inject constructor(
         setBreedUseCase(query)
         viewModelScope.launch {
             _listDogs.value = getDogsByBreedsUseCase(query)
-            delay(2000)
+            delay(1000)
             _isLoading.value = false
         }
     }

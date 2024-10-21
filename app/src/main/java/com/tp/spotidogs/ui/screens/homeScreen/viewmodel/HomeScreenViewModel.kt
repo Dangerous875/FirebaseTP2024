@@ -28,7 +28,7 @@ class HomeScreenViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             _allBreeds.value = getAllBreedsUseCase()
-            delay(2000)
+            delay(1000)
             _isLoading.value = false
         }
     }
