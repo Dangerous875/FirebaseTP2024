@@ -104,9 +104,7 @@ fun FavoritesScreen(
     }
 
     BackHandler {
-        navHostController.navigate(MainScreenRoute) {
-            popUpTo<MainScreenRoute> { inclusive = true }
-        }
+        navHostController.popBackStack()
     }
 
 }
@@ -119,7 +117,7 @@ fun TopBar(navHostController: NavHostController, dogList: List<Dog>, onDelete: (
         modifier = Modifier.height(48.dp),
         title = {
             Text(
-                text = "Favorite breeds screen",
+                text = "Favorite breeds RoomDB",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
@@ -129,9 +127,7 @@ fun TopBar(navHostController: NavHostController, dogList: List<Dog>, onDelete: (
         },
         navigationIcon = {
             IconButton(onClick = {
-                navHostController.navigate(MainScreenRoute) {
-                    popUpTo<MainScreenRoute> { inclusive = true }
-                }
+                navHostController.popBackStack()
             }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,

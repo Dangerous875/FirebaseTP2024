@@ -26,11 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.tp.spotidogs.R
 import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
 import com.tp.spotidogs.data.navigation.HomeScreenRoute
 import com.tp.spotidogs.data.navigation.FireStoreRoute
@@ -62,7 +64,7 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
         },
         colors = TopAppBarDefaults.topAppBarColors(Color.Black),
         actions = {
-            IconButton(onClick = {navController.navigate(FavoriteScreenRoute)}) {
+            IconButton(onClick = {navController.navigate(FireStoreRoute)}) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = null,
@@ -84,7 +86,7 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .clickable {navController.navigate(FavoriteScreenRoute)}
+                        .clickable { navController.navigate(FireStoreRoute) }
                         .fillMaxWidth()
                 ) {
 
@@ -110,18 +112,18 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .clickable {navController.navigate(FireStoreRoute)}
+                        .clickable { navController.navigate(FavoriteScreenRoute) }
                         .fillMaxWidth()
                 ) {
 
                     Icon(
-                        imageVector = Icons.Default.Star,
+                        painter = painterResource(id = R.drawable.ic_localdb),
                         contentDescription = null,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
 
                     Text(
-                        text = "Firestore",
+                        text = "RoomDB",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(end = 16.dp)
@@ -136,9 +138,11 @@ fun TopActionBar(navController: NavHostController, onSearch: (Boolean) -> Unit) 
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .clickable {navController.navigate(HomeScreenRoute){
-                            popUpTo<HomeScreenRoute> { inclusive = true }
-                        } }
+                        .clickable {
+                            navController.navigate(HomeScreenRoute) {
+                                popUpTo<HomeScreenRoute> { inclusive = true }
+                            }
+                        }
                         .fillMaxWidth()
                 ) {
 

@@ -13,6 +13,9 @@ import com.tp.spotidogs.data.network.service.DogApiService
 import com.tp.spotidogs.domain.model.Dog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -90,11 +93,8 @@ class DogsRepository @Inject constructor(
     private fun deleteAllDocumentsFireStore() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-
                 val collection = firestore.collection(firestore_collection_favoriteDogs)
                 val documents = collection.get().await()
-
-
                 for (document in documents.documents) {
                     collection.document(document.id).delete()
                 }
@@ -104,5 +104,21 @@ class DogsRepository @Inject constructor(
         }
     }
 
-
+    fun getAllDogsFromFireStore(): Flow<List<DogStore>> = callbackFlow {
+        val listener = firestore.collection(firestore_collection_favoriteDogs)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error) // Cierra el Flow si hay un error
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val dogList = snapshot.documents.mapNotNull {
+                        it.toObject(DogStore::class.java)
+                    }
+                    trySend(dogList).isSuccess
+                }
+            }
+        awaitClose { listener.remove() }
+    }
 }
+

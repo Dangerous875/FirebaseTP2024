@@ -50,7 +50,6 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.tp.spotidogs.data.database.firestore.model.DogStore
 import com.tp.spotidogs.data.database.firestore.model.toDomain
-import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.screens.firestore.viewmodel.FireStoreViewModel
 import com.tp.spotidogs.ui.theme.Black
@@ -105,9 +104,7 @@ fun FireStoreScreen(
     }
 
     BackHandler {
-        navHostController.navigate(MainScreenRoute) {
-            popUpTo<MainScreenRoute> { inclusive = true }
-        }
+        navHostController.popBackStack()
     }
 
 }
@@ -124,7 +121,7 @@ fun TopBar(
         modifier = Modifier.height(48.dp),
         title = {
             Text(
-                text = "Favorite breeds screen",
+                text = "Favorite breeds Firestore",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
@@ -134,9 +131,7 @@ fun TopBar(
         },
         navigationIcon = {
             IconButton(onClick = {
-                navHostController.navigate(MainScreenRoute) {
-                    popUpTo<MainScreenRoute> { inclusive = true }
-                }
+                navHostController.popBackStack()
             }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,

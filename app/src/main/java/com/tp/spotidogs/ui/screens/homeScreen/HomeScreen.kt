@@ -1,5 +1,7 @@
 package com.tp.spotidogs.ui.screens.homeScreen
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +23,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,6 +35,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,27 +52,52 @@ import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.tp.spotidogs.R
 import com.tp.spotidogs.data.local.OrientationScreen
-import com.tp.spotidogs.data.navigation.FavoriteScreenRoute
+import com.tp.spotidogs.data.navigation.FireStoreRoute
 import com.tp.spotidogs.data.navigation.LoginScreenRoute
 import com.tp.spotidogs.data.navigation.MainScreenRoute
+import com.tp.spotidogs.ui.components.ExitConfirmation
 import com.tp.spotidogs.ui.components.SetOrientationScreen
+import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.screens.homeScreen.viewmodel.HomeScreenViewModel
-import com.tp.spotidogs.ui.theme.Black
 import com.tp.spotidogs.ui.theme.Green
 
 @Composable
-fun HomeScreen(navController: NavHostController, auth: FirebaseAuth, viewModel: HomeScreenViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavHostController,
+    auth: FirebaseAuth,
+    viewModel: HomeScreenViewModel = hiltViewModel()
+) {
 
     val isLoading by viewModel.isLoading.collectAsState()
     val allBreeds by viewModel.allBreeds.collectAsState()
     val context = LocalContext.current
+    var showExitConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     SetOrientationScreen(context = context, orientation = OrientationScreen.PORTRAIT.orientation)
 
     if (isLoading) {
         ShowLoading()
     } else {
-        ShowContent(allBreeds, viewModel, navController,auth)
+        ShowContent(allBreeds, viewModel, navController, auth)
+    }
+
+    if (showExitConfirmation) {
+        ExitConfirmation(
+            show = showExitConfirmation,
+            onDismiss = { showExitConfirmation = false },
+            onConfirm = {
+                val activity = context as Activity
+                activity.finishAffinity()
+            },
+            title = "Do you want to exit app ? ",
+            message = "Exit Confirmation"
+        )
+    }
+
+    BackHandler {
+        showExitConfirmation = true
     }
 
 
@@ -82,7 +110,7 @@ fun ShowContent(
     navController: NavHostController,
     auth: FirebaseAuth
 ) {
-    TopBarHome(navController,auth)
+    TopBarHome(navController, auth)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -168,6 +196,22 @@ fun ShowContent(
 @Composable
 fun TopBarHome(navController: NavHostController, auth: FirebaseAuth) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
+    var logOutConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    ExitConfirmation(
+        show = logOutConfirmation,
+        onDismiss = { logOutConfirmation = false },
+        onConfirm = {
+            auth.signOut()
+            navController.navigate(LoginScreenRoute) {
+                popUpTo(MainScreenRoute) { inclusive = true }
+            }
+        },
+        title = "Do you want LOG OUT ? ",
+        message = "Log out confirmation"
+    )
     TopAppBar(
         modifier = Modifier.height(48.dp),
         title = {
@@ -182,8 +226,12 @@ fun TopBarHome(navController: NavHostController, auth: FirebaseAuth) {
         },
         colors = TopAppBarDefaults.topAppBarColors(Color.Black),
         actions = {
-            Text(text = "Favorites", color = Color.White, fontSize = 16.sp)
-            IconButton(onClick = { navController.navigate(FavoriteScreenRoute) }) {
+            Text(
+                text = "Favorites",
+                color = Color.White,
+                fontSize = 16.sp,
+                modifier = Modifier.clickable { navController.navigate(FireStoreRoute) })
+            IconButton(onClick = { navController.navigate(FireStoreRoute) }) {
                 Icon(
                     imageVector = Icons.Filled.Favorite,
                     contentDescription = null,
@@ -208,40 +256,33 @@ fun TopBarHome(navController: NavHostController, auth: FirebaseAuth) {
                         .clickable {}
                         .fillMaxWidth()
                 ) {
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable {auth.signOut()
-                            navController.navigate(LoginScreenRoute) {
-                                popUpTo(MainScreenRoute) { inclusive = true }
-                            }}
-                        .fillMaxWidth()
-                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clickable {
+                                logOutConfirmation = true
+                            }
+                            .fillMaxWidth()
+                    ) {
 
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                        contentDescription = null,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = null,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
 
-                    Text(
-                        text = "Log Out",
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Normal,
-                        modifier = Modifier.padding(end = 16.dp)
-                    )
+                        Text(
+                            text = "Log Out",
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Normal,
+                            modifier = Modifier.padding(end = 16.dp)
+                        )
+                    }
+
                 }
-
             }
-        }
         }
     )
 }
 
-@Composable
-fun ShowLoading() {
-    Box(modifier = Modifier.fillMaxSize().background(Black), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(color = Green)
-    }
-}
