@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.tp.spotidogs.data.navigation.MainScreenRoute
 import com.tp.spotidogs.domain.model.Dog
 import com.tp.spotidogs.ui.components.ShowLoading
 import com.tp.spotidogs.ui.screens.favoriteScreen.viewmodel.FavoriteScreenViewModel
